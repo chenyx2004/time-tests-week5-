@@ -1,0 +1,47 @@
+- name: generic_case
+  time_range_1:
+    start_time: "2010-01-12 10:00:00"
+    end_time: "2010-01-12 12:00:00"
+  time_range_2:
+    start_time: "2010-01-12 10:30:00"
+    end_time: "2010-01-12 10:45:00"
+    number_of_intervals: 2
+    gap_between_intervals_s: 60
+  expected:
+    - ["2010-01-12 10:30:00", "2010-01-12 10:37:00"]
+    - ["2010-01-12 10:38:00", "2010-01-12 10:45:00"]
+
+- name: no_overlap
+  time_range_1:
+    start_time: "2010-01-12 10:00:00"
+    end_time: "2010-01-12 11:00:00"
+  time_range_2:
+    start_time: "2010-01-12 12:00:00"
+    end_time: "2010-01-12 13:00:00"
+  expected: []
+
+- name: multiple_intervals
+  time_range_1:
+    start_time: "2010-01-12 10:00:00"
+    end_time: "2010-01-12 11:00:00"
+    number_of_intervals: 3
+    gap_between_intervals_s: 300
+  time_range_2:
+    start_time: "2010-01-12 10:15:00"
+    end_time: "2010-01-12 10:45:00"
+    number_of_intervals: 2
+    gap_between_intervals_s: 60
+  expected:
+    - ["2010-01-12 10:15:00", "2010-01-12 10:16:40"]
+    - ["2010-01-12 10:21:40", "2010-01-12 10:29:30"]
+    - ["2010-01-12 10:30:30", "2010-01-12 10:38:20"]
+    - ["2010-01-12 10:43:20", "2010-01-12 10:45:00"]
+
+- name: adjacent_ranges
+  time_range_1:
+    start_time: "2010-01-12 10:00:00"
+    end_time: "2010-01-12 11:00:00"
+  time_range_2:
+    start_time: "2010-01-12 11:00:00"
+    end_time: "2010-01-12 12:00:00"
+  expected: []
